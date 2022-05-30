@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "[![Actions Status](https://github.com/MishinS/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/MishinS/frontend-project-lvl2/actions)",
-  "main": "index.js",  
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,5 +24,9 @@
     "commander": "^9.2.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "jest": "^28.1.0"
   }
 }
