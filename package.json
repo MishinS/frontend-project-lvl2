@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "type": "module",
   "description": "[![Actions Status](https://github.com/MishinS/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/MishinS/frontend-project-lvl2/actions)",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint src --",
+    "lint:fix": "npm run lint --fix"
   },
   "bin": {
-    "gendiff": "bin/gendiff.js"
+    "gendiff": "src/bin/gendiff.js"
   },
   "repository": {
     "type": "git",
@@ -21,9 +25,23 @@
   },
   "homepage": "https://github.com/MishinS/frontend-project-lvl2#readme",
   "dependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.2",
+    "@babel/node": "^7.17.10",
+    "@babel/preset-env": "^7.18.2",
+    "@jest/globals": "^28.1.0",
+    "babel-eslint": "^10.1.0",
     "commander": "^9.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.5.3",
+    "jest-circus": "^28.1.0",
+    "jest-cli": "^28.1.0",
     "js-yaml": "^4.1.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "process": "^0.11.10"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
