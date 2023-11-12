@@ -1,89 +1,61 @@
 import _ from 'lodash';
 
-/**
- * Get indent by depth value.
- * @param depth{number}
- * @param spaceWidth {number} [4]
- * @return {string}
- */
-const indent = (depth, spaceWidth = 4) => ' '.repeat(depth * spaceWidth - 2);
+const getTab = (currenDepth, multiplire = 4) => {
+  const space = ' ';
+  const result = space.repeat(currenDepth * multiplire - 2);
+  return result;
+};
 
-/**
- * Stringify object by current indent.
- * @param data{{}}
- * @param depth{number}
- * @param mapping{Object}
- * @return {string}
- */
-const stringify = (data, depth, mapping) => {
-  if (!_.isObject(data)) {
-    return String(data);
+const getFormattedValue = (value, depth) => {
+  if (!_.isObject(value)) {
+    return String(value);
   }
 
-  const resultString = Object.entries(data).map(([key, value]) => (
-    mapping.unchanged({ key, value }, depth + 1)
-  ));
-  return `{\n${resultString.join('\n')}\n${indent(depth)}  }`;
+  const tab = getTab(depth, 4);
+  const tabClose = getTab(depth - 1, 4);
+
+  const entrise = Object.entries(value);
+
+  const result = entrise.map(([key, innerValue]) => {
+    const tempString = `${tab}  ${key}: ${getFormattedValue(innerValue, depth + 1)}`;
+    return tempString;
+  });
+  return ['{', ...result, `${tabClose}  }`].join('\n');
 };
 
-/**
- * Get styled string.
- * @type {
- *   {
- *     root: (function(
- *       node: {key: string, status: string, children: []}, depth: number, iter: function
- *     ): string),
- *     unchanged: (function(
- *       node: {key: string, status: string, value: string}, depth: number
- *     ): string),
- *     added: (function(
- *       node: {key: string, status: string, value: string}, depth: number
- *     ): string),
- *     removed: (function(
- *       node: {key: string, status: string, value: string}, depth: number
- *     ): string),
- *     nested: (function(
- *       node: {key: string, status: string, children: []}, depth: number, iter: function
- *     ): string),
- *     updated: (function(
- *       node: {key: string, status: string, value: string}, depth: number
- *     ): string)}
- *   }
- */
-const mapping = {
-  root: ({ children }, depth, iter) => {
-    const output = children.flatMap((node) => mapping[node.status](node, depth + 1, iter));
-    return `{\n${output.join('\n')}\n}`;
-  },
-  unchanged: (node, depth) => (
-    `${indent(depth)}  ${node.key}: ${stringify(node.value, depth, mapping)}`
-  ),
-  added: (node, depth) => (
-    `${indent(depth)}+ ${node.key}: ${stringify(node.value, depth, mapping)}`
-  ),
-  removed: (node, depth) => (
-    `${indent(depth)}- ${node.key}: ${stringify(node.value, depth, mapping)}`
-  ),
-  nested: ({ key, children }, depth, iter) => {
-    const output = children.flatMap((node) => mapping[node.status](node, depth + 1, iter));
-    return `${indent(depth)}  ${key}: {\n${output.join('\n')}\n${indent(depth)}  }`;
-  },
-  updated: (node, depth) => {
-    const [beforeValue, afterValue] = node.value;
-    return `${indent(depth)}- ${node.key}: ${stringify(beforeValue, depth, mapping)}\n`
-      + `${indent(depth)}+ ${node.key}: ${stringify(afterValue, depth, mapping)}`;
-  },
+const formatter = (tree) => {
+  const iter = (node, depth) => {
+    const arrMap = node.map((key) => {
+      const tab = getTab(depth);
+      switch (key.type) {
+        case 'nested': {
+          const formattedChildren = iter(key.children, depth + 1);
+          return `${tab}  ${key.name}: {\n${formattedChildren}\n${tab}  }`;
+        }
+        case 'unchanged': {
+          return `${tab}  ${key.name}: ${getFormattedValue(key.value, depth + 1)}`;
+        }
+        case 'deleted': {
+          return `${tab}- ${key.name}: ${getFormattedValue(key.value, depth + 1)}`;
+        }
+        case 'added': {
+          return `${tab}+ ${key.name}: ${getFormattedValue(key.value, depth + 1)}`;
+        }
+        case 'changed': {
+          const formattedOldValue = `${tab}- ${key.name}: ${getFormattedValue(key.oldValue, depth + 1)}\n`;
+          const formattedNewValue = `${tab}+ ${key.name}: ${getFormattedValue(key.newValue, depth + 1)}`;
+          return formattedOldValue + formattedNewValue;
+        }
+        default: {
+          return null;
+        }
+      }
+    });
+    return arrMap.join('\n');
+  };
+  const result = `{\n${iter(tree, 1)}\n}`;
+  return result;
 };
 
-/**
- * Get tree styled output.
- * @param data{{}}
- * @return {string}
- */
-const getStylish = (data) => {
-  const iter = (node, depth) => mapping[node.status](node, depth, iter);
+export default formatter;
 
-  return iter(data, 0);
-};
-
-export default getStylish;

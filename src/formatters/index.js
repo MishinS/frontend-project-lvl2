@@ -1,10 +1,16 @@
 import stylish from './stylish.js';
-import getPlain from './plain.js';
 
-const formatter = {
-  stylish: (diffList) => stylish(diffList),
-  plain: (diffList) => getPlain(diffList),
-  json: (diffList) => JSON.stringify(diffList),
+const formatter = (tree, formatType) => {
+  switch (formatType) {
+    case 'stylish':
+      return stylish(tree);
+    case 'plain':
+      return plain(tree);
+    case 'json':
+      return json(tree);
+    default:
+      return null;
+  }
 };
+export default formatter;
 
-export default (ast, type) => formatter[type](ast);

@@ -26,10 +26,6 @@
             key: value
         }
       + nest: str
-      - nestAfter: str
-      + nestAfter: {
-            key: value
-        }
     }
   - group2: {
         abc: 12345
