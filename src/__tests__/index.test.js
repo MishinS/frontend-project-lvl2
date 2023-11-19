@@ -13,6 +13,7 @@ const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8'
 const formats = {
   stylish: 'stylish',
   plain: 'plain',
+  json: 'json',
 };
 
 const testFilesFlat = [
@@ -38,4 +39,8 @@ describe('Tests', () => {
     expect(gendiff(getFixturePath(file1), getFixturePath(file2), form.plain)).toBe(readFile('./results/plainResult.txt'));
   });
   
+  test.each(testFilesTree)('Json', (file1, file2, form) => {
+    expect(gendiff(getFixturePath(file1), getFixturePath(file2), form.json)).toBe(readFile('./results/jsonResult.txt'));
+  });
 });
+  
