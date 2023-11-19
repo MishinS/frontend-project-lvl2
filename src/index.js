@@ -24,4 +24,3 @@ const diff = (file1, file2, formatName = 'stylish') => {
 };
 
 export default diff;
-

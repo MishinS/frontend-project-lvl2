@@ -30,17 +30,16 @@ describe('Tests', () => {
   test.each(testFilesFlat)('Flat', (file1, file2) => {
     expect(gendiff(getFixturePath(file1), getFixturePath(file2))).toBe(readFile('./results/flatResult.txt'));
   });
-  
+
   test.each(testFilesTree)('Tree', (file1, file2, form) => {
     expect(gendiff(getFixturePath(file1), getFixturePath(file2), form.stylish)).toBe(readFile('./results/treeResult.txt'));
   });
-  
+
   test.each(testFilesTree)('Plain', (file1, file2, form) => {
     expect(gendiff(getFixturePath(file1), getFixturePath(file2), form.plain)).toBe(readFile('./results/plainResult.txt'));
   });
-  
+
   test.each(testFilesTree)('Json', (file1, file2, form) => {
     expect(gendiff(getFixturePath(file1), getFixturePath(file2), form.json)).toBe(readFile('./results/jsonResult.txt'));
   });
 });
-  

@@ -58,4 +58,3 @@ const formatter = (tree) => {
 };
 
 export default formatter;
-

@@ -15,4 +15,3 @@ const formatter = (tree, formatType) => {
   }
 };
 export default formatter;
-

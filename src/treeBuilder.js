@@ -36,4 +36,3 @@ const treeBuilder = (obj1, obj2) => {
 };
 
 export default treeBuilder;
-
