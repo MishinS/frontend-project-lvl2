@@ -3,8 +3,8 @@
 <a href="https://codeclimate.com/github/MishinS/frontend-project-lvl2/maintainability"><img src="https://api.codeclimate.com/v1/badges/eb0dbaf44d61efbd048f/maintainability" /></a>
 <a href="https://codeclimate.com/github/MishinS/frontend-project-lvl2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/eb0dbaf44d61efbd048f/test_coverage" /></a>
 
-<p<h1>Difference calculator</h1>>
-<pThis app will can help you to compaier beetween two files ext. json and yaml. Use CLI command by Node.js. The package includes 3 types of formatters: stylish, plain, json>
+<p><h1>Difference calculator</h1></p>
+<p>This app will can help you to compaier beetween two files ext. json and yaml. Use CLI command by Node.js. The package includes 3 types of formatters: stylish, plain, json</p>
 
 ## <p><h2>Quick start</h2></p>
 
