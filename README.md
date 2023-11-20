@@ -55,10 +55,10 @@ make genJson
 
 <h2>Examples</h2>
 
-Example to call help.
+Example compaire flat files.
 <a href="https://asciinema.org/a/sn1YzIkzf6Vo5dmUnW8pYZfI8" target="_blank"><img src="https://asciinema.org/a/sn1YzIkzf6Vo5dmUnW8pYZfI8.svg" /></a>
 
-Example compaire flat files.
+Example tests work.
 <a href="https://asciinema.org/a/9Bjp73rnu6wV2IDcgHnoHla53" target="_blank"><img src="https://asciinema.org/a/9Bjp73rnu6wV2IDcgHnoHla53.svg" /></a>
 
 Example compaire nested files to stylish format.
